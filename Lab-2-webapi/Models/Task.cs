@@ -15,6 +15,13 @@ namespace Lab_2_webapi.Models
             Hight
         }
 
+        public enum State
+        {
+            Open,
+            InProgress,
+            Closed
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
