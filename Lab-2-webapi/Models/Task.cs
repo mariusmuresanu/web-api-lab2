@@ -24,10 +24,10 @@ namespace Lab_2_webapi.Models
         [EnumDataType(typeof(TaskImportance))]
         public TaskImportance Imp { get; set; }
 
-        //[EnumDataType(typeof(State))]
-        //public State Status { get; set; }
+        [EnumDataType(typeof(State))]
+        public State Status { get; set; }
 
         public DateTime ClosedAt { get; set; }
-        //public List<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

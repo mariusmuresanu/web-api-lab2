@@ -19,11 +19,17 @@ namespace Lab_2_webapi.Controllers
             this.context = context;
         }
 
-        // GET: api/Tasks
+        /// <summary>
+        /// Gets all the tasks.
+        /// </summary>
+        
+        /// <param name="from">Optional, filter by minimum Deadline</param>
+        /// <param name="to">Optional, filter by maximum Deadline</param>
+        /// <returns>A list of Task objects</returns>
         [HttpGet]
         public IEnumerable<Models.Task> Get([FromQuery]DateTime? from, [FromQuery]DateTime? to)
         {
-            IQueryable<Models.Task> result = context.Tasks;
+            IQueryable<Models.Task> result = context.Tasks.Include(t =>t.Comments);
             if (from == null & to == null)
             {
                 return result;
@@ -43,7 +49,9 @@ namespace Lab_2_webapi.Controllers
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(int id)
         {
-            var existing = context.Tasks.FirstOrDefault(task => task.Id == id);
+            var existing = context.Tasks
+                .Include(t => t.Comments)
+                .FirstOrDefault(task => task.Id == id);
             if (existing == null)
             {
                 return NotFound();
@@ -51,7 +59,38 @@ namespace Lab_2_webapi.Controllers
             return Ok(existing);
         }
 
-        // POST: api/Tasks
+        /// <summary>
+        /// Add a task
+        /// </summary>
+        /// /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Tasks
+        ///     {
+        ///         "title": "Todo with comment",
+        ///         "description": "description4",
+        ///         "dateAdded": "2019-05-06T00:00:00",
+        ///         "deadline": "2019-05-15T00:00:00",
+        ///         "imp": 1,
+        ///         "closedAt": "2019-05-17T00:00:00",
+        ///         "comments": [
+        ///         	{
+        ///         		"text": "morning task",
+        ///         		"important": true
+        ///
+        ///             },
+        ///         	{
+        ///		
+        ///         		"text": "first task",
+        ///         		"important": false
+        ///         	}
+        ///	        ]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="task">The task to add.</param>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public void Post([FromBody] Models.Task task)
         {

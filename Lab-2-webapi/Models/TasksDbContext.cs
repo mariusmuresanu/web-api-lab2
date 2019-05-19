@@ -13,6 +13,10 @@ namespace Lab_2_webapi.Models
         public TasksDbContext(DbContextOptions<TasksDbContext> optons) : base(optons)
         {
         }
+
+        //DbSet = Repository
+        //DbSet = O tabela din baza de date
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

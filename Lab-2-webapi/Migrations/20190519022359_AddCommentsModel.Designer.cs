@@ -4,14 +4,16 @@ using Lab_2_webapi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Lab_2_webapi.Migrations
 {
     [DbContext(typeof(TasksDbContext))]
-    partial class TasksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190519022359_AddCommentsModel")]
+    partial class AddCommentsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,13 +29,9 @@ namespace Lab_2_webapi.Migrations
 
                     b.Property<bool>("Important");
 
-                    b.Property<int?>("TaskId");
-
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
 
                     b.ToTable("Comments");
                 });
@@ -59,13 +57,6 @@ namespace Lab_2_webapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("Lab_2_webapi.Models.Comment", b =>
-                {
-                    b.HasOne("Lab_2_webapi.Models.Task")
-                        .WithMany("Comments")
-                        .HasForeignKey("TaskId");
                 });
 #pragma warning restore 612, 618
         }
