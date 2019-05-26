@@ -80,11 +80,17 @@ namespace Lab_2_webapi.Services
         {
             var existing = context.Tasks.AsNoTracking().FirstOrDefault(f => f.Id == id);
             if (existing == null)
+
             {
                 context.Tasks.Add(task);
                 context.SaveChanges();
                 return task;
             }
+                task.Id = id;
+            if (task.Status == Task.State.Closed && existing.Status != Task.State.Closed)
+                task.ClosedAt = DateTime.Now;
+            else if (existing.Status == Task.State.Closed && task.Status != Task.State.Closed)
+                task.ClosedAt = null;
             task.Id = id;
             context.Tasks.Update(task);
             context.SaveChanges();

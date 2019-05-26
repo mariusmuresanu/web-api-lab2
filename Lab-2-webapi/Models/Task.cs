@@ -15,8 +15,7 @@ namespace Lab_2_webapi.Models
             Hight
         }
 
-        public enum State
-        {
+         public enum State {
             Open,
             InProgress,
             Closed
@@ -32,9 +31,9 @@ namespace Lab_2_webapi.Models
         public TaskImportance Imp { get; set; }
 
         [EnumDataType(typeof(State))]
-        public State Status { get; set; }
+        public State? Status { get; set; }
 
-        public DateTime ClosedAt { get; set; }
+        public DateTime? ClosedAt { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }
