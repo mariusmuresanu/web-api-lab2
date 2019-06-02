@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lab_2_webapi.Models;
 using Lab_2_webapi.Services;
+using Lab_2_webapi.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +29,14 @@ namespace Lab_2_webapi.Controllers
         /// <param name="to">Optional, filter by maximum Deadline</param>
         /// <returns>A list of Task objects</returns>
         [HttpGet]
-        public IEnumerable<Models.Task> Get([FromQuery]DateTime? from, [FromQuery]DateTime? to)
+        public IEnumerable<TaskGetModel> Get([FromQuery]DateTime? from, [FromQuery]DateTime? to)
         {
             return taskService.GetAll(from, to);
         }
 
         // GET: api/Tasks/5
         [HttpGet("{id}", Name = "Get")]
+
         public IActionResult Get(int id)
         {
             var found = taskService.GetById(id);

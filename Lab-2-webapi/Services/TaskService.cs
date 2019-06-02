@@ -1,4 +1,5 @@
 ﻿using Lab_2_webapi.Models;
+using Lab_2_webapi.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Lab_2_webapi.Services
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        IEnumerable<Task> GetAll(DateTime? from=null, DateTime? to=null);
+        IEnumerable<TaskGetModel> GetAll(DateTime? from=null, DateTime? to=null);
         Task GetById(int id);
         Task Create(Task task);
         Task Upsert(int id, Task task);
@@ -50,12 +51,18 @@ namespace Lab_2_webapi.Services
             return existing;
         }
 
-        public IEnumerable<Task> GetAll(DateTime? from=null, DateTime? to=null)
+        public IEnumerable<TaskGetModel> GetAll(DateTime? from=null, DateTime? to=null)
         {
-            IQueryable<Models.Task> result = context.Tasks.Include(t => t.Comments);
+            IQueryable<Task> result = context
+                .Tasks
+                .Include(t => t.Comments);
             if (from == null & to == null)
             {
-                return result;
+                return result.Select(t => new TaskGetModel
+                {
+                    Title = t.Title,
+                    Description = t.Description
+                });
             }
             if (from != null)
             {
@@ -65,7 +72,11 @@ namespace Lab_2_webapi.Services
             {
                 result = result.Where(t => t.Deadline <= to);
             }
-            return result;
+            return result.Select(t => new TaskGetModel
+            {
+                Title = t.Title,
+                Description = t.Description
+            }); ;
         }
 
         public Task GetById(int id)
