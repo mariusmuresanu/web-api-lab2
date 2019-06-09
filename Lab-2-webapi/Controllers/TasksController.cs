@@ -20,11 +20,11 @@ namespace Lab_2_webapi.Controllers
         {
             this.taskService = taskService;
         }
-
+        // GET: api/Tasks
         /// <summary>
         /// Gets all the tasks.
         /// </summary>
-        
+
         /// <param name="from">Optional, filter by minimum Deadline</param>
         /// <param name="to">Optional, filter by maximum Deadline</param>
         /// <returns>A list of Task objects</returns>
@@ -35,6 +35,11 @@ namespace Lab_2_webapi.Controllers
         }
 
         // GET: api/Tasks/5
+        /// <summary>
+        /// Get a task by a given ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A task with a given ID</returns>
         [HttpGet("{id}", Name = "Get")]
 
         public IActionResult Get(int id)
@@ -77,6 +82,8 @@ namespace Lab_2_webapi.Controllers
         ///
         /// </remarks>
         /// <param name="task">The task to add.</param>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
@@ -86,6 +93,12 @@ namespace Lab_2_webapi.Controllers
         }
 
         // PUT: api/Tasks/5
+        /// <summary>
+        /// Update a task with the given ID, or create a new task if the ID does not exist.
+        /// </summary>
+        /// <param name="id">task ID</param>
+        /// <param name="task">The object Task</param>
+        /// <returns>The updated task/new created task.</returns>
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Models.Task task)
         {
@@ -94,6 +107,11 @@ namespace Lab_2_webapi.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Delete a task by a given ID
+        /// </summary>
+        /// <param name="id">ID of the task to be deleted.</param>
+        /// <returns>The deleted task object.</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

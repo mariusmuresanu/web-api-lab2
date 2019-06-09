@@ -13,5 +13,7 @@ namespace Lab_2_webapi.ViewModels
         public DateTime Deadline { get; set; }
         public string Status { get; set; }
         public DateTime ClosedAt { get; set; }
+
+       
     }
 }

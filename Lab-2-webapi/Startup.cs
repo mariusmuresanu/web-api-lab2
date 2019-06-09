@@ -60,7 +60,7 @@ namespace Lab_2_webapi
             });
             // Dependency injection
             services.AddScoped<ITaskService, TaskService>();
-            
+            services.AddScoped<ICommentService, CommentService>();
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

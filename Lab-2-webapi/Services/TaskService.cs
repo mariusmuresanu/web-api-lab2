@@ -53,16 +53,12 @@ namespace Lab_2_webapi.Services
 
         public IEnumerable<TaskGetModel> GetAll(DateTime? from=null, DateTime? to=null)
         {
-            IQueryable<Task> result = context
+                IQueryable<Task> result = context
                 .Tasks
                 .Include(t => t.Comments);
             if (from == null & to == null)
             {
-                return result.Select(t => new TaskGetModel
-                {
-                    Title = t.Title,
-                    Description = t.Description
-                });
+                return result.Select(t => TaskGetModel.FromTask(t));
             }
             if (from != null)
             {
@@ -72,11 +68,7 @@ namespace Lab_2_webapi.Services
             {
                 result = result.Where(t => t.Deadline <= to);
             }
-            return result.Select(t => new TaskGetModel
-            {
-                Title = t.Title,
-                Description = t.Description
-            }); ;
+            return result.Select(t => TaskGetModel.FromTask(t));
         }
 
         public Task GetById(int id)
